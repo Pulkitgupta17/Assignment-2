@@ -12,33 +12,41 @@
   flex-grow: 3;
 }
 
-.generate-form-button {
-  margin: 1px;
-  width: 15%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 50px;
-  position: relative;
-}
-
-.generate-form-button button {
-  width: 100%;
+.generate-form-button,
+#dynamic-form-submit-button {
+  /* width: 32%;
   height: 40px;
   background-color: green;
   color: azure;
-  border-radius: 4px;
+  border-radius: 26px;
   border: 0px;
+  margin-top: 2%; */
+  margin-top: 2%;
+  background-color: green;
+  color: whitesmoke;
+  padding: 12px 50px;
+  border: 2px solid green;
+  border-radius: 100vmax;
+  cursor: pointer;
+  font-family: var(--ff-montserrat);
+  font-size: var(--fs-links-btns);
+}
+
+button.generate-form-button:hover,
+#submit-button:hover,
+#dynamic-form-submit-button:hover {
+  cursor: pointer;
+  /* background-color: white;
+  color: black; */
+  transform: scale(1.06);
 }
 
 form {
-  /* width  : 100%; */
-  border: 1px solid #ccc;
-  margin-left: 2%;
-  margin-right: 2%;
+  border: 1px solid black;
+  margin-left: 18%;
+  margin-right: 18%;
   padding: 50px;
-  text-align: left; /* Center text within the form */
-  border-right: 0px;
+  text-align: left;
   align-content: center;
 }
 
@@ -47,12 +55,19 @@ form input,
 form select {
   margin-bottom: 10px;
   margin-top: 10px;
+  margin-left: 2%;
+  border-radius: 7px;
 }
 
 form input,
 form select {
   width: 25%;
   height: 30px;
+}
+
+#new-form input[type="submit"] {
+  width: auto;
+  height: auto;
 }
 
 #isRequired {
@@ -62,19 +77,20 @@ form select {
 }
 
 .input-submit {
-  margin-top: 10px;
-  width: 40%;
-  height: 29px;
-  background-color: green;
+  margin-top: 19px;
+  width: 6%;
+  height: 33px;
+  background-color: #4089d3;
   color: azure;
   border-radius: 4px;
   border: 0px;
 }
 
-#preview {
+.preview {
   display: grid;
   grid-template-rows: 1fr 1fr;
   height: fit-content;
+  margin-top: 6%;
 }
 
 .preview-heading {

@@ -10,11 +10,6 @@
     <div class="my-form">
       <section class="section-heading">
         <div class="heading"><h1>Form Builder</h1></div>
-        <div class="generate-form-button">
-          <button id="generate-form-btn" onclick="generateForm()">
-            Generate Form
-          </button>
-        </div>
       </section>
       <form action="" id="dataForm">
         <label for="element-name"> Element Name: </label>
@@ -26,7 +21,6 @@
           class="input-text"
           required
         />
-        <br />
         <label for="element-type"> Element Type: </label>
         <select
           name="element-type"
@@ -55,20 +49,19 @@
           value="Add"
           class="input-submit"
         />
+        <br />
+        <button
+          id="generate-form-btn"
+          class="generate-form-button"
+          onclick="generateForm()"
+        >
+          Generate Form
+        </button>
       </form>
     </div>
     <div class="preview">
       <div class="preview-heading" id="preview"><h1>Preview</h1></div>
-      <div class="dynamic-portion">
-        <form id="new-form" class="new-form">
-          <input
-            type="submit"
-            id="dynamic-form-submit-button"
-            value="Submit"
-            class="input-submit"
-          />
-        </form>
-      </div>
+      <div class="dynamic-portion" id="dynamic-portion"></div>
     </div>
     <script src="./script.js"></script>
   </body>

@@ -1,5 +1,30 @@
-var data = [];
+let data = [];
 
+let dataForm = document.getElementById("dataForm");
+dataForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let elementName = document.getElementById("element-name").value;
+  let elementType = document.getElementById("element-type").value;
+  let isRequired = document.getElementById("isRequired");
+  if (elementName == "") {
+    alert("Ensure you input a value in Element Name!");
+  } else {
+    if (isRequired.checked) {
+      isRequired = true;
+    } else {
+      isRequired = false;
+    }
+    let optionArray = [];
+    if (elementType === "select") {
+      for (let i = 1; i <= 4; i++) {
+        optionArray.push(document.getElementById("option" + i).value);
+      }
+    }
+    data.push({ elementName, elementType, optionArray, isRequired });
+    // console.log(data);
+    console.log("working");
+  }
+});
 function checkSelectOption() {
   var elementType = document.getElementById("element-type");
   var form = document.getElementById("dataForm");
@@ -15,7 +40,7 @@ function checkSelectOption() {
       var optionLabel = document.createElement("label");
       optionLabel.textContent = "Option " + i + ": ";
       optionLabel.id = "option" + i + "label";
-      optionLabel.for = optionInput.id;
+      optionLabel.htmlFor = optionInput.id;
 
       form.insertBefore(
         optionLabel,
@@ -51,37 +76,16 @@ function removeOptionFields() {
   document.getElementById("isRequiredLabel").style.marginTop = "10px";
 }
 
-let dataForm = document.getElementById("dataForm");
-dataForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  let elementName = document.getElementById("element-name").value;
-  let elementType = document.getElementById("element-type").value;
-  let isRequired = document.getElementById("isRequired");
-  if (elementName == "") {
-    alert("Ensure you input a value in Element Name!");
-  } else {
-    if (isRequired.checked) {
-      isRequired = true;
-    } else {
-      isRequired = false;
-    }
-    let optionArray = [];
-    if (elementType === "select") {
-      for (let i = 1; i <= 4; i++) {
-        optionArray.push(document.getElementById("option" + i).value);
-      }
-    }
-    data.push({ elementName, elementType, optionArray, isRequired });
-    // console.log(data);
-    console.log("working");
-  }
-});
-
 function generateForm() {
-  console.log("Reaching Here");
-  var form = document.getElementById("new-form");
-  //   console.log(data);
-  let submitButton = document.getElementById("dynamic-form-submit-button");
+  console.log("removed!");
+  if (document.getElementById("new-form") !== null) {
+    document.getElementById("new-form").remove();
+  }
+
+  var form = document.createElement("form");
+  form.id = "new-form";
+  form.class = "new-form";
+  document.getElementById("dynamic-portion").appendChild(form);
   if (data.length == 0) {
     alert("For preview you must include atleast one field");
   }
@@ -90,32 +94,47 @@ function generateForm() {
     let inputLabel = dataObject.elementName + " : ";
     let inputType = dataObject.elementType;
     let isReq = dataObject.isRequired;
-    let input = document.createElement("input");
-    input.type = inputType;
+    let label = document.createElement("label");
+    label.textContent = inputLabel;
     if (inputType === "select") {
-      console.log(data);
-      let optionsArray = data[0].optionArray;
-      console.log(optionsArray);
+      var selectInput = document.createElement("select");
+      selectInput.id = "input" + index;
+      selectInput.class = "input-select";
+      label.htmlFor = selectInput.id;
+      if (isReq) {
+        selectInput.setAttribute("required", true);
+      }
+      let optionsArray = dataObject.optionArray;
       for (let i = 0; i < optionsArray.length; i++) {
         var opt = document.createElement("option");
         opt.value = optionsArray[i];
         opt.innerHTML = optionsArray[i];
-        select.appendChild(opt);
+        selectInput.appendChild(opt);
       }
+    } else {
+      var input = document.createElement("input");
+      input.type = inputType;
+      input.id = "input" + index;
+      input.name = inputLabel;
+      input.class = "input-" + inputType;
+      if (isReq) {
+        input.setAttribute("required", true);
+      }
+      label.htmlFor = input.id;
     }
-    input.id = "input" + index;
-    input.name = inputLabel;
-    input.class = "input-" + inputType;
-    if (isReq) {
-      input.setAttribute("required", true);
-    }
-    let label = document.createElement("label");
-    label.textContent = inputLabel;
-    label.for = input.id;
 
-    form.insertBefore(label, submitButton);
-    form.insertBefore(input, submitButton);
-    form.insertBefore(document.createElement("br"), submitButton);
+    form.appendChild(label);
+    if (inputType === "select") {
+      form.appendChild(selectInput);
+    } else {
+      form.appendChild(input);
+    }
+    form.appendChild(document.createElement("br"));
   }
+  let submitButton = document.createElement("input");
+  submitButton.type = "submit";
+  submitButton.className = "generate-form-button";
+  submitButton.id = "dynamic-form-submit-button";
+  form.appendChild(submitButton);
   data = [];
 }
